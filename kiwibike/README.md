@@ -4,7 +4,7 @@
 ## Team
 Jan Šindler
 
-Richar Werner
+Richard Werner
 
 Ondřej Švejstil
 
