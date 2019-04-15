@@ -2,7 +2,9 @@ from django.urls import path, include  # noqa
 
 from django.conf import settings
 
-urlpatterns = []
+urlpatterns = [
+    path("bike/", include("bikesharing.urls")),
+]
 
 if settings.DEBUG:
     from drf_yasg.views import get_schema_view

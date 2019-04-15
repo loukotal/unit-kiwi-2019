@@ -18,6 +18,8 @@ class CompanyListView(ListAPIView):
 class CompanyRetrieveView(RetrieveAPIView):
     serializer_class = CompanyDetailSerializer
     queryset = Company.objects.all()
+    # def get_queryset(self):
+    #     return Company.objects.filter(name=self.request.query_params["name"])
 
 
 class LocationListView(ListAPIView):
@@ -27,8 +29,10 @@ class LocationListView(ListAPIView):
 
 class LocationCityListView(ListAPIView):
     serializer_class = LocationSerializer
-    queryset = Location.objects.all()
+    # queryset = Location.objects.all()
     lookup_field = "city"
+    def get_queryset(self):
+        print(dir(self.request))
 
 
 class StationListView(ListAPIView):

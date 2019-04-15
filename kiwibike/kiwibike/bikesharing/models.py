@@ -12,6 +12,7 @@ class Location(models.Model):
     lat = models.FloatField()
     lon = models.FloatField()
     city = models.CharField(max_length=120)
+    country = models.CharField(max_length=5)
 
 
 class Station(models.Model):

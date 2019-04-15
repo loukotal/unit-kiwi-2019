@@ -1,4 +1,4 @@
-FROM registry.thinkeasy.cz/base-images/archlinux:latest
+FROM matouskyncl/archlinux
 
 RUN mkdir /code
 RUN mkdir /logs
