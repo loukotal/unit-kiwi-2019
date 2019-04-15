@@ -10,17 +10,20 @@ class CompanySerializer(serializers.ModelSerializer):
 
 
 class LocationSerializer(serializers.ModelSerializer):
+    company = CompanySerializer()
     class Meta:
         model = Location
         fields = "__all__"
 
 
 class LocationDetailSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = Location
+        fields = ("lat", "lon", "city", "country")
 
 
 class CompanyDetailSerializer(serializers.ModelSerializer):
-    location_set = LocationSerializer(many=True)
+    location_set = LocationDetailSerializer(many=True)
 
     class Meta:
         model = Company
@@ -28,6 +31,12 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
 
 
 class StationSerializer(serializers.ModelSerializer):
+    location = LocationSerializer()
     class Meta:
         model = Station
         fields = "__all__"
+
+
+class NearbySerializer(serializers.Serializer):
+    lat = serializers.FloatField(required=True)
+    lon = serializers.FloatField(required=True)

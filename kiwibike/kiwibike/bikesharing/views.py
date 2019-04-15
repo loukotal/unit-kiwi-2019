@@ -1,13 +1,17 @@
 import citybikes
 from django.shortcuts import get_object_or_404
+from django_filters import rest_framework as filters
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.response import Response
 
 from .models import Company, Location, Station
-from .serializers import CompanySerializer, LocationSerializer, StationSerializer, CompanyDetailSerializer
-
+from .serializers import (CompanySerializer, LocationSerializer, StationSerializer, CompanyDetailSerializer,
+                          NearbySerializer)
 
 # Create your views here.
+
+citybikes_client = citybikes.Client()
 
 
 class CompanyListView(ListAPIView):
@@ -18,8 +22,6 @@ class CompanyListView(ListAPIView):
 class CompanyRetrieveView(RetrieveAPIView):
     serializer_class = CompanyDetailSerializer
     queryset = Company.objects.all()
-    # def get_queryset(self):
-    #     return Company.objects.filter(name=self.request.query_params["name"])
 
 
 class LocationListView(ListAPIView):
@@ -29,21 +31,45 @@ class LocationListView(ListAPIView):
 
 class LocationCityListView(ListAPIView):
     serializer_class = LocationSerializer
-    # queryset = Location.objects.all()
-    lookup_field = "city"
+    queryset = Location.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ("country", "city")
+
     def get_queryset(self):
-        print(dir(self.request))
+        qs = Location.objects.all()
+        qs = qs.prefetch_related("company")
+
+        return qs
 
 
 class StationListView(ListAPIView):
     serializer_class = StationSerializer
     queryset = Station.objects.all()
 
+    def get_queryset(self):
+        qs = Station.objects.all()
+        qs = qs.prefetch_related("location", "location__company")
+
+        return qs
+
 
 class StationsNearbyView(APIView):
 
-    # TODO: Use citybikes API to return stations nearby
     def post(self, request):
-        # TODO: Get all companies / locations from the request
-        # TODO: Check for the nearest stations
-        pass
+
+        serializer = NearbySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        nearby = citybikes_client.networks.near(serializer.validated_data["lat"], serializer.validated_data["lon"])
+
+        stations = []
+        for station in nearby[:5]:
+            data = station[0]
+            d = {
+                "name": data["company"],
+                "lat": data["location"]["latitude"],
+                "lon": data["location"]["longitude"],
+                "dist": station[1]
+            }
+            stations.append(d)
+
+        return Response(stations, status=200)
