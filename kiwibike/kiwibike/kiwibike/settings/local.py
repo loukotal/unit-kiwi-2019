@@ -38,8 +38,8 @@ LOGGING = {
 
 
 REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (  # noqa
-        'rest_framework.renderers.BrowsableAPIRenderer',
-        'rest_framework.renderers.JSONRenderer'
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
         )
 
 MEDIA_ROOT = '/tmp'

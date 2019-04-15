@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Add a GeoJSON line</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<style>
+body { margin:0; padding:0; }
+#map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+ 
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoic3RhcmFwYXJ0YSIsImEiOiJjanVpM3p5ZjIxMzgxNDNwaXNpYmJ2cGMyIn0.coQL-jzkpCG9Q_aFsj3cBw';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [12.939328, 50.305913],
+zoom: 15
+});
+ 
+map.on('load', function () {
+ 
+map.addLayer({
+"id": "route",
+"type": "line",
+"source": {
+"type": "geojson",
+"data": {
+"type": "Feature",
+"properties": {},
+"geometry": {
+"type": "LineString",
+"coordinates": [[12.939328, 50.305913], [12.970166, 50.313892], [13.013863, 50.302153], [13.029946, 50.309068], [13.05516, 50.299666], [13.095116, 50.310833], [13.096856, 50.305264], [13.148492, 50.300049], [13.190422, 50.284675], [13.209356, 50.261945], [13.281288, 50.26234], [13.330091, 50.248928], [13.423887, 50.261592], [13.458654, 50.255067], [13.489139, 50.261642], [13.514961, 50.254852], [13.5247, 50.233659], [13.545658, 50.222795], [13.621463, 50.208909], [13.665547, 50.214551], [13.691077, 50.199146], [13.846674, 50.173318], [13.926262, 50.177311], [13.932555, 50.169809], [13.958325, 50.17003], [14.050247, 50.132424], [14.118509, 50.116546], [14.148555, 50.116644], [14.16182, 50.097752], [14.201683, 50.089038], [14.26247, 50.083222], [14.410993, 50.094612], [14.437781, 50.075539]]}
+}
+},
+"layout": {
+"line-join": "round",
+"line-cap": "round"
+},
+"paint": {
+"line-color": "#888",
+"line-width": 8
+}
+});
+});
+</script>
+ 
+</body>
+</html>

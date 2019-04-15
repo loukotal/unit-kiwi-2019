@@ -118,8 +118,8 @@ class GetRoute(APIView):
         for point in poi:
             p = point.split("\n")
             pata = {
-                "lat": float(p[0]),
-                "lon": float(p[1]),
+                "lat": float(p[1]),
+                "lon": float(p[0]),
                 "name": p[2],
                 "category": p[3]
             }

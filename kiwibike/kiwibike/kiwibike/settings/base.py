@@ -145,3 +145,7 @@ STATIC_ROOT = '/static'
 
 CELERY_BACKEND_URL = "redis://redis"
 CELERY_BROKER_URL = "redis://redis"
+
+
+FSQR_CLIENT_ID = os.getenv("FSQR_CLIENT_ID")
+FSQR_CLIENT_SECRET = os.getenv("FSQR_CLIENT_SECRET")
