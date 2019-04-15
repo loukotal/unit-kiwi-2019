@@ -1,0 +1,17 @@
+DJANGO_SETTINGS_MODULE=kiwibike.settings.local
+
+POSTGRES_DB=kiwibike
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=local
+
+POSTGRES_HOST=postgres
+
+SECRET_KEY=local
+
+DEBUG=True
+
+SUPERUSER_PASSWORD=WdhqsBrK
+SUPERUSER_EMAIL=info@thinkeasy.cz
+
+DOCKER_LOGIN=
+DOCKER_PASSWORD=

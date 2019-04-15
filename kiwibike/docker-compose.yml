@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+
+  redis:
+    image: redis
+
+  host:
+    build:
+      context: ./kiwibike
+
+    volumes:
+    - logs:/logs
+
+    depends_on:
+      - postgres
+
+    environment:
+    - PYTHONUNBUFFERED=1
+
+  celery:
+    build:
+      context: ./kiwibike
+
+    command: celery -A kiwibike worker -B -l info
+
+    depends_on:
+      - host
+      - redis
+
+
+volumes:
+  logs:

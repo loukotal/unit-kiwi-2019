@@ -1,0 +1,71 @@
+stages:
+ - quality
+ - deploy
+ - test
+
+
+deploy_dev:
+  stage: deploy
+  image: docker
+  before_script:
+  - apk add --update py-pip
+  - apk add gettext
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry.thinkeasy.cz
+  - pip install docker-compose
+  script:
+  - docker-compose -f docker-compose.yml -f docker-compose.dev.yml build
+  - docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
+  - docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --force-recreate
+  only:
+  - master
+
+
+deploy_stage:
+  stage: deploy
+  image: docker
+  before_script:
+  - apk add --update py-pip
+  - apk add gettext
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry.thinkeasy.cz
+  - pip install docker-compose
+  script:
+  - docker-compose -p kiwibike-stage -f docker-compose.yml -f docker-compose.stage.yml build
+  - docker-compose -p kiwibike-stage -f docker-compose.yml -f docker-compose.stage.yml down
+  - docker-compose -p kiwibike-stage -f docker-compose.yml -f docker-compose.stage.yml up -d --force-recreate
+  only:
+  - stage
+
+
+build_stable:
+  stage: deploy
+  image: docker
+  before_script:
+  - apk add --update py-pip
+  - apk add gettext bash
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry.thinkeasy.cz
+  - pip install docker-compose awscli
+  script:
+  - echo "This needs to be defined"
+
+  only:
+    - /^release-v.*$/
+
+
+flake8:
+  stage: quality
+  image: registry.thinkeasy.cz/base-images/archlinux:latest
+
+  allow_failure: true
+
+  before_script:
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry.thinkeasy.cz
+
+  script:
+    - pip install flake8-html
+    - flake8 --format=html --htmldir=flake-report ./kiwibike
+
+  artifacts:
+    when: always
+    paths:
+    - flake-report/
+    expire_in: 1 week

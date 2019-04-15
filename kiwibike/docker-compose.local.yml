@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres
+    env_file:
+      - .local
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  host:
+    env_file:
+      - .local
+
+    ports:
+      - 8000:8000
+
+    command: /bin/bash -c 'sleep 10 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
+
+    volumes:
+      - ./kiwibike:/code
+
+
+  celery:
+    env_file:
+      - .local
+
+volumes:
+  postgres_data:

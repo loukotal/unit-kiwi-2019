@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres
+    env_file:
+      - .stage
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  host:
+    command: /bin/bash -c "sleep 10 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+
+    env_file:
+      - .stage
+
+    ports:
+      - 8000:8000
+
+    networks:
+      - default
+      - endpoint
+
+    volumes:
+      - media:/media
+
+    restart: unless-stopped
+
+  celery:
+
+    restart: unless-stopped
+    env_file:
+      - .stage
+
+volumes:
+  postgres_data:
+  media:
+
+networks:
+  endpoint:
+    external:
+      name: nginx-proxy
