@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Add a GeoJSON line</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<style>
+body { margin:0; padding:0; }
+#map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+ 
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoic3RhcmFwYXJ0YSIsImEiOiJjanVpM3p5ZjIxMzgxNDNwaXNpYmJ2cGMyIn0.coQL-jzkpCG9Q_aFsj3cBw';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [15.768539, 50.040385],
+zoom: 15
+});
+ 
+map.on('load', function () {
+ 
+map.addLayer({
+"id": "route",
+"type": "line",
+"source": {
+"type": "geojson",
+"data": {
+"type": "Feature",
+"properties": {},
+"geometry": {
+"type": "LineString",
+"coordinates": [[15.768539, 50.040385], [15.765617, 50.052089], [15.757795, 50.058385], [15.741351, 50.062304], [15.71409, 50.059737], [15.705041, 50.066697], [15.6742, 50.074235], [15.64611, 50.060269], [15.608868, 50.048059], [15.589081, 50.049453], [15.572297, 50.057176], [15.529003, 50.056898], [15.518109, 50.052974], [15.493449, 50.057434], [15.476931, 50.052885], [15.458129, 50.054094], [15.430983, 50.049403], [15.425777, 50.052066], [15.385717, 50.052318], [15.354872, 50.04375], [15.319397, 50.040318], [15.312474, 50.042665], [15.308158, 50.039251], [15.287105, 50.043188], [15.259363, 50.039756], [15.235493, 50.041676], [15.200587, 50.027969], [15.150983, 50.055077], [15.144009, 50.052171], [15.128409, 50.063804], [15.107723, 50.059591], [15.073722, 50.072368], [14.986754, 50.073258], [14.975235, 50.06453], [14.962419, 50.067471], [14.91126, 50.065803], [14.861927, 50.072869], [14.85624, 50.070648], [14.853568, 50.073249], [14.802522, 50.07355], [14.792955, 50.078619], [14.761264, 50.082041], [14.74857, 50.088032], [14.741243, 50.078966], [14.706097, 50.075329], [14.647817, 50.083731], [14.616416, 50.082407], [14.606503, 50.087134], [14.593985, 50.084518], [14.549076, 50.094394], [14.462937, 50.072919], [14.446598, 50.071964], [14.437781, 50.075539]]}
+}
+},
+"layout": {
+"line-join": "round",
+"line-cap": "round"
+},
+"paint": {
+"line-color": "#888",
+"line-width": 8
+}
+});
+});
+</script>
+ 
+</body>
+</html>

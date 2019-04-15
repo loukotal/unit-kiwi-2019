@@ -10,6 +10,7 @@ from .serializers import (CompanySerializer, LocationSerializer, StationSerializ
                           NearbySerializer)
 
 from .utils import airport_coordinates, mapbox, get_poi
+from .map import print_map
 # Create your views here.
 
 citybikes_client = citybikes.Client()
@@ -129,5 +130,7 @@ class GetRoute(APIView):
             "points_of_interest": pata_list,
             "route": list(map_data)
         }
+
+        print_map(d["route"])
 
         return Response(d, status=200)
