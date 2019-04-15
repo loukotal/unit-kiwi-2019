@@ -1,13 +1,19 @@
-Run a local (dev) instance just by running start_dev.sh, you will need a working docker compose on your machine.
+# Unit Best - Kiwi.com assignment
+[link](http://unit.bestprague.cz/)
 
-start_dev.sh \<option\>
-    
-- makemigrations: make django migrations
+## Team
+Jan Šindler
 
-- migrate: migrate local dev database (happens automatically when starting the dev environment)
+Richar Werner
 
-- bash: run bash in container
+Ondřej Švejstil
 
-- csu: create super user
+Lukáš Loukota
 
-- test: run django tests
+
+## Run the code
+
+you need to have `docker` and `docker-compose` installed. Run `start_local.sh`.
+
+## Docs
+If you run the server, docs are at `/api/v1/docs/`.
