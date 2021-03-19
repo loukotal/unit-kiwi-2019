@@ -27,7 +27,7 @@ django-rest-framework==0.1.0
 django-s3-storage==0.12.4
 django-ses==0.8.9
 django-silk==3.0.1
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 docutils==0.14
 drf-yasg==1.13.0
